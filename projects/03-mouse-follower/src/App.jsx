@@ -63,4 +63,8 @@ function App() {
   );
 }
 
+//para desplegar la aplicacion en produccion ejecutar:
+// npm run build
+//luego copiar la carpet /dist con todos sus fichero en el sitio https://app.netlify.com/drop 
+
 export default App;
