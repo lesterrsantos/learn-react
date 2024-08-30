@@ -1,68 +1,39 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+import { useCatImage } from "./hooks/useCatImage.js";
+import { useCatFact } from "./hooks/useCatFact.js";
 
-const CAT_ENDPOINT_RANDOM_FACT = "https://catfact.ninja/fact";
+const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 const CAT_ENDPOINT_IMAGE_URL = "https://cataas.com/cat/says/hello";
 const CAT_ENDPOINT_IMAGE_URL2 =
   "https://cataas.com/cat/says/${thirdWords}?size=50&color=red&json=true";
 
+
+
 export function App() {
-  const [fact, setFact] = useState("cat fact");
-  const [imageUrl, setImageUrl] = useState();
+  const { fact, refreshFact } = useCatFact();
+  const imageUrl = useCatImage(fact);
+  
 
-  // no puedes usar React Query, SWR, axios, apollo
-  useEffect(() => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then((res) => res.json())
-      .then((data) => {
-        const { fact } = data;
-        setFact(fact);
-      });
-  }, []); //ejecutar solo la primera vez
-
+  console.log("Image ", imageUrl);
   // si usas useEffect(() => {}) sin dependencias se ejecuta cada vez que se renderice el componente
 
-  useEffect(() => {
-    if (!fact) return;
-
-    const firstWord = fact.split(" ")[0];
-    const thirdWords = fact.split(" ").slice(0, 3).join(" ");
-    console.log(firstWord);
-    console.log(thirdWords);
-
-    // fetch(CAT_ENDPOINT_IMAGE_URL)
-    //   .then((res) => res.json())
-    //   .then((response) => {
-    //     console.log(response);
-    //     const { url } = response;
-    //     setImageUrl(url);
-    //   });
-    fetch(`https://cataas.com/cat/says/${thirdWords}?size=50&color=red`)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        const img = document.createElement("img");
-        img.src = url;
-        // document.body.appendChild(img);
-        setImageUrl(url);
-      })
-      .catch((error) => {
-        console.error("Error fetching cat image:", error);
-      });
-  }, [fact]);
+  const handleClick = async () => {
+    refreshFact();
+  };
 
   return (
     <main>
       <h1>App de gatitos</h1>
-      <section>
-        {fact && <p>{fact}</p>}
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={`Cat recovered from first words for ${fact}`}
-          ></img>
-        )}
-      </section>
+      {/* <section> */}
+      <button onClick={handleClick}>Get new fact</button>
+      {fact && <p>{fact}</p>}
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={`Cat recovered from first words for ${fact}`}
+        ></img>
+      )}
+      {/* </section> */}
     </main>
   );
 }
