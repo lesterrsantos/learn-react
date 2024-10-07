@@ -15,7 +15,7 @@ export function App() {
   const midudev = {
     userName: "midudev",
     name: "Miguel Angel Duran",
-    initialIsFollowing: true
+    initialIsFollowing: true,
   };
   return (
     <section className="App">
@@ -25,7 +25,7 @@ export function App() {
         Pablo Hernandez
       </TwitterFollowCard>
 
-      { /* Hacer comentarios dentro de Jsx */}
+      {/* Hacer comentarios dentro de Jsx */}
 
       <TwitterFollowCard userName="vxnder" name="Vanderhart">
         Vanderhart

@@ -7,6 +7,7 @@ const CAT_ENDPOINT_IMAGE_URL = "https://cataas.com/cat/says/hello";
 const CAT_ENDPOINT_IMAGE_URL2 =
   "https://cataas.com/cat/says/${thirdWords}?size=50&color=red&json=true";
 
+const PERSON_COMMIT_URL = "https://172.29.6.14:51202";  
 
 
 export function App() {
